@@ -1,0 +1,45 @@
+.form-wrapper
+  = form_with(model: person, local: true, url: url, class: 'pure-form', id: 'msform') do |form|
+    - if person.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(person.errors.count, "error")
+          prohibited this person from being saved:
+        %ul
+          - person.errors.full_messages.each do |message|
+            %li= message
+    .form-section
+      .field
+        = form.label :name
+        = form.text_field :name
+      .field
+        = form.label :birth_year
+        = form.number_field :birth_year
+      .field
+        = form.label :death_year
+        = form.number_field :death_year
+      .field
+        = form.label :citizenship
+        = select('person', 'citizenship_id', Country.all.map { |country| [country.name, country.id] })
+      .field
+        = form.label :domicile
+        = select('person', 'domicile_id', Country.all.map { |country| [country.name, country.id] })                                                            
+      .field
+        = form.label :state
+        = select('person', 'state_id', State.all.map { |state| [state.name, state.id] })
+      .field
+        = form.label :zipcode
+        = form.text_field :zipcode
+      .field
+        = form.label 'Country of Registration'
+        = select('person', 'country_id', Country.all.map { |country| [country.name, country.id] })
+      .field
+        = form.label :address
+        = form.text_field :address
+      .field
+        = form.label :city
+        = form.text_field :city
+      = form.hidden_field :citizenship_type, value: 'Country'
+      = form.hidden_field :domicile_type, value: 'Country'
+      .actions
+        = form.submit 'Create', class: 'normal'
