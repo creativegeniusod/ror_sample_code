@@ -1,0 +1,56 @@
+<h1>Fabrics on Rack</h1>
+<%= link_to 'Submit Missing Fabrics', submit_missing_fabrics_path(id: @fabrics_rack.id),
+    data: {confirm: "This will compile the list of missing fabrics and send it to you. Its up to you to determine if they qualify for replacements and work with your sales manager if they do not. This will no longer be seen by the factory."},
+    class: "btn btn-warning btn-sm" %>
+
+<hr>
+
+<dl class="dl-horizontal">
+  <dt>Created:</dt> <dd><%= @fabrics_rack.created_at.to_date %></dd>
+  <dt>Updated:</dt> <dd><%= @fabrics_rack.updated_at.to_date %></dd>
+  <dt>Customer:</dt> <dd><%= @fabrics_rack.customer != nil ? @fabrics_rack.customer.name : "Unknown" %></dd>
+  <td></td>
+</dl>
+<hr>
+
+
+<%= form_for @fabric, remote: true, :html => { :class => "form-horizontal fabric", id:"FabricForm" } do |f| %>
+  <%= f.text_field :fabrics_rack, :value => @fabrics_rack.id, :readonly => true, :class => 'hidden' %>
+  <%= f.text_field :fabric_number, placeholder: "Fabric number", autofocus: true, :html => {  id:"FabricForm-Number" } %>
+  <%= f.submit "Add Fabric", :class => 'btn btn-primary' %>
+<% end %>
+<button type="button" class="btn btn-primary btn-sm" id="EnableSound">Turn Sound On</button>
+<label "label label-danger" id="CanPlayFailed" hidden>Can Play Test Failed</label>
+<label "label label-danger" id="CanPlayPassed" hidden>Can Play Test Passed</label>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Entered Fabrics</h3>
+    <div id="FabricsOnRack">
+      <%= render 'fabrics_racks/fabrics' %>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<audio id="sound_effect_duplicate" class="audio_player">
+    <source src="http://hmrep.com/audio/duplicate.mp3" type="audio/mpeg">
+</audio>
+<audio id="sound_effect_retired" class="audio_player">
+    <source src="http://hmrep.com/audio/retired.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // run on page load
+  var button = document.getElementById('EnableSound');
+  var duplicate = document.getElementById('sound_effect_duplicate');
+  var retired = document.getElementById('sound_effect_retired');
+
+  var onClick = function() {
+      duplicate.play();
+      retired.play();
+  };
+
+  button.addEventListener('click', onClick, false);
+</script>

@@ -1,6 +1,6 @@
 # ROR sample_one
 
-This folder sample code of ruby-on-rails application build on v2.5.1 of ruby. 
+This folder contains sample code of ruby-on-rails application build on v2.5.1 of ruby and v5.2.0 of rails. 
 The core idea of this application was creating organization and maintaing their artists sound recording and issuing copyrights to them.
 It's UI built using SAAS & HAML format using best standard coding practices.
 
